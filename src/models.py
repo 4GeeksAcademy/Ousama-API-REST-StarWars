@@ -23,7 +23,6 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            # NUNCA devolvemos la contraseña por seguridad
         }
 
 class People(db.Model):
@@ -58,9 +57,9 @@ class People(db.Model):
         }
 
 class Planet(db.Model):
-    __tablename__ = 'planet' # Nombre de la tabla en la DB
+    __tablename__ = 'planet'
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(100), unique=True, nullable=False) # Name unique como en el API de SWAPI
+    name: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
     diameter: Mapped[str] = mapped_column(String(50), nullable=True)
     rotation_period: Mapped[str] = mapped_column(String(50), nullable=True)
     orbital_period: Mapped[str] = mapped_column(String(50), nullable=True)
@@ -110,11 +109,11 @@ class FavoritePeople(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "people_id": self.people_id,
-            "people_name": self.people.name if self.people else None # Incluir nombre del personaje para fácil referencia
+            "people_name": self.people.name if self.people else None 
         }
 
 class FavoritePlanet(db.Model):
-    __tablename__ = 'favorite_planet' # Nombre de la tabla en la DB
+    __tablename__ = 'favorite_planet' 
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
     planet_id: Mapped[int] = mapped_column(ForeignKey('planet.id'), nullable=False)
@@ -133,5 +132,5 @@ class FavoritePlanet(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "planet_id": self.planet_id,
-            "planet_name": self.planet.name if self.planet else None # Incluir nombre del planeta para fácil referencia
+            "planet_name": self.planet.name if self.planet else None
         }
